@@ -1,14 +1,36 @@
 package com.example.vannt97.FoodDeliver.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "t_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "id_user")
-    private int idUser;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToMany(mappedBy = "order")
+    private Set<FoodOrder> foodOrders;
+
+    public Set<FoodOrder> getFoodOrders() {
+        return foodOrders;
+    }
+
+    public void setFoodOrders(Set<FoodOrder> foodOrders) {
+        this.foodOrders = foodOrders;
+    }
+
     @Column(name = "estimate_ship")
     private String estimateShip;
     @Column(name = "deliver_address")
@@ -22,13 +44,7 @@ public class Order {
         this.id = id;
     }
 
-    public int getIdUser() {
-        return idUser;
-    }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
-    }
 
     public String getEstimateShip() {
         return estimateShip;

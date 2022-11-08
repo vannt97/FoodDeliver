@@ -1,14 +1,28 @@
 package com.example.vannt97.FoodDeliver.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity(name = "user_detail")
 public class UserDetail {
     @Id
     @Column(name = "id_user")
     private int idUser;
+    @JsonIgnore
+    @OneToOne()
+    @MapsId
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     private String address;
     @Column(name = "mobile_phone")
     private String mobilePhone;

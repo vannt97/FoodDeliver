@@ -1,5 +1,7 @@
 package com.example.vannt97.FoodDeliver.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "food_review")
@@ -7,10 +9,30 @@ public class FoodReview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "id_food")
-    private int idFood;
-    @Column(name = "id_user")
-    private int idUser;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_food")
+    private Food food;
+
+    public Food getFood() {
+        return food;
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
+    }
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Column(name = "content")
     private String content;
     @Column(name = "create_date")
@@ -24,22 +46,6 @@ public class FoodReview {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getIdFood() {
-        return idFood;
-    }
-
-    public void setIdFood(int idFood) {
-        this.idFood = idFood;
-    }
-
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
     }
 
     public String getContent() {

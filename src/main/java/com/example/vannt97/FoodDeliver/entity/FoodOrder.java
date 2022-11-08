@@ -1,6 +1,7 @@
 package com.example.vannt97.FoodDeliver.entity;
 
 import com.example.vannt97.FoodDeliver.embedded.FoodOrderKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -16,34 +17,40 @@ public class FoodOrder {
     public void setFoodOrderKey(FoodOrderKey foodOrderKey) {
         this.foodOrderKey = foodOrderKey;
     }
+    @JsonIgnore
+    @ManyToOne
+    @MapsId("idFood")
+    @JoinColumn(name = "id_food")
+    private Food food;
 
-    //    @Id
-//    @Column(name = "id_order")
-//    private int idOrder;
-//    @Column(name = "id_food")
-//    private int idFood;
+    @JsonIgnore
+    @ManyToOne
+    @MapsId("idOrder")
+    @JoinColumn(name = "id_order")
+    private Order order;
+
+    public Food getFood() {
+        return food;
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Column(name = "price")
     private float price;
     @Column(name = "quality")
     private int quality;
     @Column(name = "id_promo")
     private int id_promo;
-
-//    public int getIdOrder() {
-//        return idOrder;
-//    }
-//
-//    public void setIdOrder(int idOrder) {
-//        this.idOrder = idOrder;
-//    }
-//
-//    public int getIdFood() {
-//        return idFood;
-//    }
-//
-//    public void setIdFood(int idFood) {
-//        this.idFood = idFood;
-//    }
 
     public float getPrice() {
         return price;

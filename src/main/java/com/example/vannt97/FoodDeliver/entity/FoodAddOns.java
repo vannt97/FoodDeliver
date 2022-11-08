@@ -1,5 +1,7 @@
 package com.example.vannt97.FoodDeliver.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "food_addon")
@@ -13,8 +15,9 @@ public class FoodAddOns {
     private String image;
     @Column(name = "price")
     private int price;
-    @Column(name = "id_food")
-    private int idFood;
+    @OneToOne
+    @JoinColumn(name = "id_food",referencedColumnName = "id")
+    private Food food;
 
     public int getId() {
         return id;
@@ -48,11 +51,11 @@ public class FoodAddOns {
         this.price = price;
     }
 
-    public int getIdFood() {
-        return idFood;
+    public Food getFood() {
+        return food;
     }
 
-    public void setIdFood(int idFood) {
-        this.idFood = idFood;
+    public void setFood(Food food) {
+        this.food = food;
     }
 }

@@ -7,6 +7,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @OneToOne(mappedBy = "user")
+    private UserDetail userDetail;
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
+    }
+
     private String email;
     private String password;
     private String fullname;

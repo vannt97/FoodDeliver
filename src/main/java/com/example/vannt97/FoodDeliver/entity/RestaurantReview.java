@@ -8,8 +8,17 @@ public class RestaurantReview {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "id_restaurant")
-    private int idRestaurant;
+    @ManyToOne
+    @JoinColumn(name = "id_restaurant")
+    private Restaurant restaurant;
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 
     private String content;
     private float rate;
@@ -22,13 +31,6 @@ public class RestaurantReview {
         this.id = id;
     }
 
-    public int getIdRestaurant() {
-        return idRestaurant;
-    }
-
-    public void setIdRestaurant(int idRestaurant) {
-        this.idRestaurant = idRestaurant;
-    }
 
     public String getContent() {
         return content;
