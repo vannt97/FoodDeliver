@@ -1,11 +1,11 @@
 package com.example.vannt97.FoodDeliver.repository;
 
-import com.example.vannt97.FoodDeliver.entity.Category;
+import com.example.vannt97.FoodDeliver.entity.CategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CategoryRepository extends JpaRepository<Category,Integer> {
+public interface CategoryRepository extends JpaRepository<CategoryEntity,Integer> {
 
-    public List<Category> findAll();
+    public List<CategoryEntity> findAll();
 }

@@ -1,7 +1,7 @@
 package com.example.vannt97.FoodDeliver.controller;
 
 import com.example.vannt97.FoodDeliver.entity.*;
-import com.example.vannt97.FoodDeliver.service.*;
+import com.example.vannt97.FoodDeliver.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 public class TestController {
 
     @Autowired
@@ -37,47 +37,46 @@ public class TestController {
     StatusService statusService;
 
     @Autowired
-    UserService userService;
-    @Autowired
-    UserDetailService userDetailService;
+    LoginService loginService;
+
     @GetMapping("/categories")
-    public List<Category> getCategories(){
+    public List<CategoryEntity> getCategories(){
         return categoryService.getAll();
     }
 
     @GetMapping("/foods")
-    public List<Food> getAllFoods(){ return foodService.getAllFoods();}
+    public List<FoodEntity> getAllFoods(){ return foodService.getAllFoods();}
 
     @GetMapping("/food-add-ons")
-    public List<FoodAddOns> getAllFoodAddOns(){ return foodAddOnsService.getAllFoodAddOns();}
+    public List<FoodAddOnsEntity> getAllFoodAddOns(){ return foodAddOnsService.getAllFoodAddOns();}
 
     @GetMapping("/food-details")
-    public List<FoodDetail> getAllFoodDetails(){ return foodDetailService.getAllFoodDetails();}
+    public List<FoodDetailEntity> getAllFoodDetails(){ return foodDetailService.getAllFoodDetails();}
 
     @GetMapping("/food-orders")
-    public List<FoodOrder> getAllFoodOrders(){ return foodOrderService.getAllFoodOrders();}
+    public List<FoodOrderEntity> getAllFoodOrders(){ return foodOrderService.getAllFoodOrders();}
 
     @GetMapping("/food-reviews")
-    public  List<FoodReview> getAllFoodReviews(){return foodReviewService.getAllFoodReviews();}
+    public  List<FoodReviewEntity> getAllFoodReviews(){return foodReviewService.getAllFoodReviews();}
 
     @GetMapping("/materials")
-    public  List<Material> getAllMaterials(){return materialService.getALlMaterials();}
+    public  List<MaterialEntity> getAllMaterials(){return materialService.getALlMaterials();}
 
     @GetMapping("/restaurants")
-    public List<Restaurant> getAllRestaurants(){ return restaurantService.getAllRestaurants();}
+    public List<RestaurantEntity> getAllRestaurants(){ return restaurantService.getAllRestaurants();}
 
     @GetMapping("/restaurant-reviews")
-    public List<RestaurantReview> getALlRestaurantReviews(){return  restaurantReviewService.getAllRestaurantReviews();}
+    public List<RestaurantReviewEntity> getALlRestaurantReviews(){return  restaurantReviewService.getAllRestaurantReviews();}
 
     @GetMapping("/status")
-    public List<Status> getALlStatus(){ return statusService.getALlStatus();}
+    public List<StatusEntity> getALlStatus(){ return statusService.getALlStatus();}
 
     @GetMapping("/orders")
-    public List<Order> getAllOrders(){
+    public List<OrderEntity> getAllOrders(){
         return  orderService.getAllOrders();
     }
     @GetMapping("/users")
-    public List<User> getAllUsers(){ return userService.getAllUsers();}
+    public List<UserEntity> getAllUsers(){ return loginService.getAllUsers();}
     @GetMapping("/user-details")
-    public List<UserDetail> getAllUserDetails() {return userDetailService.getAlluserDetails();}
+    public List<UserDetailEntity> getAllUserDetails() {return loginService.getAllUserDetails();}
 }
