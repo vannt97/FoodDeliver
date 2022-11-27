@@ -10,4 +10,7 @@ public interface LoginService {
     public List<UserDetailEntity> getAllUserDetails();
 
     public boolean checkLogin(String email, String password);
+
+    public UserEntity checkLogin(String email);
+
 }

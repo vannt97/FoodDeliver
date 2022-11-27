@@ -7,6 +7,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,17 +17,24 @@ import java.util.ArrayList;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     LoginService loginService;
+
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
+        UserEntity user = loginService.checkLogin(email);
 
-        System.out.println("email: " + email + " - password: " + password);
-        if (loginService.checkLogin(email,password)) {
+        if (user != null) {
             // use the credentials
             // and authenticate against the third-party system
-            return new UsernamePasswordAuthenticationToken(
-                    email, password, new ArrayList<>());
+            if(passwordEncoder.matches(password,user.getPassword())){
+                return new UsernamePasswordAuthenticationToken(
+                        user.getEmail(),user.getPassword(), new ArrayList<>());
+            }else {
+                return null;
+            }
+
         } else {
             return null;
         }

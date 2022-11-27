@@ -3,7 +3,8 @@ package com.example.vannt97.FoodDeliver.payload.response;
 public class DataResponse {
     private int status;
     private String desc;
-    private String data;
+
+    private Object data;
 
     private boolean isSuccess;
 
@@ -31,11 +32,11 @@ public class DataResponse {
         this.desc = desc;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

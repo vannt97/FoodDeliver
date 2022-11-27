@@ -1,8 +1,13 @@
 package com.example.vannt97.FoodDeliver.controller;
 
+import com.example.vannt97.FoodDeliver.entity.UserEntity;
+import com.example.vannt97.FoodDeliver.jwt.JwtTokenHelper;
 import com.example.vannt97.FoodDeliver.payload.request.SignInRequest;
 import com.example.vannt97.FoodDeliver.payload.response.DataResponse;
+import com.example.vannt97.FoodDeliver.payload.response.DataTokenResponse;
+import com.example.vannt97.FoodDeliver.payload.response.DataUserResponse;
 import com.example.vannt97.FoodDeliver.services.LoginService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +27,36 @@ public class LoginController {
     LoginService loginService;
     @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired
+    JwtTokenHelper jwtTokenHelper;
+
+
+
+
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody SignInRequest signInRequest){
+    public ResponseEntity<?> signin(@RequestBody SignInRequest signInRequest) throws JsonProcessingException {
         UsernamePasswordAuthenticationToken authReq
                 = new UsernamePasswordAuthenticationToken(signInRequest.getEmail(), signInRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authReq);
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(auth);
+
+        UserEntity user = loginService.checkLogin(signInRequest.getEmail());
+
+        DataTokenResponse dataTokenResponse = jwtTokenHelper.genaralToken(new DataUserResponse(
+                user.getEmail(), user.getFullname(),user.getPhoneNumber()));
+
+//        jwtTokenHelper.decodeToken(dataTokenResponse.getToken());
+//        String result = jwtTokenHelper.decodeTokenBuoiHoc(dataTokenResponse.getToken());
+//        System.out.println(result);
+
         DataResponse dataResponse = new DataResponse();
 
 
-        if(loginService.checkLogin(signInRequest.getEmail(),signInRequest.getPassword())){
+        if(user != null){
             dataResponse.setStatus(HttpStatus.OK.value());
             dataResponse.setSuccess(true);
-            dataResponse.setData("");
+            dataResponse.setData(dataTokenResponse);
             dataResponse.setDesc("Login Success");
         }else {
             dataResponse.setStatus(HttpStatus.UNAUTHORIZED.value());

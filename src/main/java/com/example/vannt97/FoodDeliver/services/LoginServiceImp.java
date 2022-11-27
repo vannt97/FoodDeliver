@@ -30,5 +30,11 @@ public class LoginServiceImp implements LoginService {
         return list.size() > 0;
     }
 
+    @Override
+    public UserEntity checkLogin(String email) {
+        List<UserEntity> list = userRepository.findByEmail(email);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
 
 }
